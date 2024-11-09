@@ -1,0 +1,55 @@
+class ManageGaji:
+    def __init__(self, gaji):
+        self.gaji = gaji
+        self.saldo = gaji
+        self.riwayat_transaksi = [("Gaji awal", gaji)]
+
+    def tampilkan_saldo(self):
+        print(f"Saldo saat ini: Rp {self.saldo}")
+
+    def catat_pengeluaran(self, jumlah, deskripsi):
+        if jumlah > self.saldo:
+            print("Maaf, saldo tidak mencukupi!")
+        else:
+            self.saldo -= jumlah
+            self.riwayat_transaksi.append((deskripsi, -jumlah))
+            print(f"Pengeluaran berhasil dicatat: Rp {jumlah} untuk {deskripsi}")
+
+    def tampilkan_riwayat(self):
+        print("\nRiwayat Transaksi:")
+        for deskripsi, jumlah in self.riwayat_transaksi:
+            print(f"{deskripsi}: Rp {jumlah}")
+        print(f"Saldo akhir: Rp {self.saldo}")
+
+# Program utama
+def main():
+    try:
+        gaji = float(input("Masukkan jumlah gaji bulanan Anda: Rp "))
+        pengelola_gaji = ManageGaji(gaji)
+        
+        while True:
+            print("\nMenu:")
+            print("1. Tampilkan saldo")
+            print("2. Catat pengeluaran")
+            print("3. Tampilkan riwayat transaksi")
+            print("4. Keluar")
+            pilihan = input("Pilih menu (1-4): ")
+
+            if pilihan == "1":
+                pengelola_gaji.tampilkan_saldo()
+            elif pilihan == "2":
+                jumlah = float(input("Masukkan jumlah pengeluaran: Rp "))
+                deskripsi = input("Masukkan deskripsi pengeluaran: ")
+                pengelola_gaji.catat_pengeluaran(jumlah, deskripsi)
+            elif pilihan == "3":
+                pengelola_gaji.tampilkan_riwayat()
+            elif pilihan == "4":
+                print("Terima kasih! Sampai jumpa.")
+                break
+            else:
+                print("Pilihan tidak valid, silakan pilih lagi.")
+    except ValueError:
+        print("Input tidak valid! Masukkan angka untuk gaji atau pengeluaran.")
+
+if __name__ == "__main__":
+    main()
